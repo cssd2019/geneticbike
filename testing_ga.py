@@ -5,6 +5,7 @@
 import numpy as np
 import operator # to sort list in dictionary
 from bike import Bike
+import random
 
 # This is declared in the first iteration of GenAlg
 #   ... updates with new max_x reached in each iteration of GenAlg
@@ -26,9 +27,8 @@ def main():
 
     #create_child(Bike1.locations, Bike2.locations)
     Baby = create_child(Bike1, Bike2)
-    print(Baby.locations)
     default_baby = default_child()
-    print(default_baby.locations)
+    Baby_mutated = add_mutation(Baby)
 
     #print(Bike1.locations)
     #print(Bike2.locations)
@@ -159,7 +159,7 @@ def default_child():
     # After the breeding, each individual must have a small probability 
     # to see their DNA change a little bit. 
     # The goal of this operation is to prevent the algorithm to be blocked in a local minimum.
-def add_mutation():
+def add_mutation(Bike_input):
     """
     Add natural mutation.
 
@@ -169,9 +169,15 @@ def add_mutation():
     Returns:
         Slightly mutated bike object
     """
-    # mutate the location of both wheels with 0-10 % random
+    # mutate the location of both wheels with 0-20 % random increase or decrease
+    rand_mutate     = random.uniform( -0.2, 0.2 )
+    original_loc    = Bike_input.locations
+    mutated_wheel_x = ( 1 - rand_mutate ) * original_loc[0][:2]
+    mutated_wheel_y = ( 1 - rand_mutate ) * original_loc[1][:2]
 
+    print(Bike_input.aw)
 
+    #Baby_mutated = Baby_Bike = Bike(np.array([]))
     pass
 
 
