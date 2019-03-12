@@ -27,7 +27,8 @@ def main():
     #create_child(Bike1.locations, Bike2.locations)
     Baby = create_child(Bike1, Bike2)
     print(Baby.locations)
-    #print(baby_newgen_loc)
+    default_baby = default_child()
+    print(default_baby.locations)
 
     #print(Bike1.locations)
     #print(Bike2.locations)
@@ -118,7 +119,7 @@ def permute_parents():
     pass
 
 
-def create_child(parent1, parent2_loc):
+def create_child(parent1, parent2):
     """
     How to combine [average?] between two parents.
 
@@ -128,8 +129,8 @@ def create_child(parent1, parent2_loc):
     Returns:
         One shiny new baby bicycle object
     """
-    parent1_loc = Bike1.locations
-    parent2_loc = Bike2.locations
+    parent1_loc = parent1.locations
+    parent2_loc = parent2.locations
 
     baby_loc = ( parent1_loc + parent2_loc ) * 0.5
     # return numpy array of x and y average value of newgen baby
@@ -151,7 +152,8 @@ def default_child():
     Returns:
         One random baby bicycle object
     """
-    pass
+    default_baby_Bike = Bike("random")
+    return default_baby_Bike
 
     # This last step of our genetic algorithm is the natural mutation of an individual. 
     # After the breeding, each individual must have a small probability 
@@ -167,6 +169,9 @@ def add_mutation():
     Returns:
         Slightly mutated bike object
     """
+    # mutate the location of both wheels with 0-10 % random
+
+
     pass
 
 
