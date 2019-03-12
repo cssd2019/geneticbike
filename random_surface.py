@@ -15,5 +15,5 @@ def create_random_surface(n=100):
     
     avg = list(avg)
     avg = [str(x) for x in avg]
-    with open('.random_surface.csv', 'w') as f:
+    with open('./random_surface.csv', 'w') as f:
         f.write(','.join(avg))
