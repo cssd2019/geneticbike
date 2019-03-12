@@ -13,14 +13,23 @@ global_max_x = 0
 # Extra counter to check number of GA iterations
 ga_counter = 0
 
+Bike1 = Bike("random")
+Bike2 = Bike("random")
 
-def main()
-    create_genes()
-    # test_fitness()
+def main():
+    #gene_input = create_genes()
+    #sorted_gene = test_fitness(gene_input)
     # update_max_x()
-    # select_parents()
+    #parents = select_parents(sorted_gene)
     # permute_parents()
-    # create_child()
+
+
+    #create_child(Bike1.locations, Bike2.locations)
+    create_child(Bike1, Bike2)
+    #print(baby_newgen_loc)
+
+
+    #create_child()
     # # do default child as back-up setting in case GA algorithm doesn't work
     # default_child()
     # add_mutation()
@@ -41,15 +50,14 @@ def create_genes():
         genes (dictionary with label:distgens.ance)
     """
     # dictionary with genes and distances
-genes =	{
-"A": 4,
-"B": 1,
-"C": 9,
-"D": 8,
-"E": 6,
-"F": 0
-}
-
+    genes =	{
+    "A": 4,
+    "B": 1,
+    "C": 9,
+    "D": 8,
+    "E": 6,
+    "F": 0
+    }
     return genes
 
 
@@ -76,7 +84,7 @@ def update_max_x():
         Updates GLOBAL x reached
     """
 
-    global_max_x = maximum x reached
+    #global_max_x = maximum x reached
     return global_max_x
 
 
@@ -105,10 +113,10 @@ def permute_parents():
     Return:
         Permutation list? Necessary?
     """
+    pass
 
 
-
-def create_child():
+def create_child(parent1, parent2_loc):
     """
     How to combine [average?] between two parents.
 
@@ -118,10 +126,19 @@ def create_child():
     Returns:
         One shiny new baby bicycle object
     """
+    parent1_loc = Bike1.locations
+    parent2_loc = Bike2.locations
+
+    baby_locx = ( parent1_loc + parent2_loc ) * 0.5
+    baby_locy = ( parent1_loc + parent2_loc ) * 0.5
+    # return numpy array of x and y average value of newgen baby
+
+    return np.array([baby_locx, baby_locy])
+
 
 
     # 
-def default_child()
+def default_child():
     """
     Define random default output so that 
     entire toolchain "works" to some degree
@@ -132,13 +149,13 @@ def default_child()
     Returns:
         One random baby bicycle object
     """
-
+    pass
 
     # This last step of our genetic algorithm is the natural mutation of an individual. 
     # After the breeding, each individual must have a small probability 
     # to see their DNA change a little bit. 
     # The goal of this operation is to prevent the algorithm to be blocked in a local minimum.
-def add_mutation()
+def add_mutation():
     """
     Add natural mutation.
 
@@ -148,14 +165,17 @@ def add_mutation()
     Returns:
         Slightly mutated bike object
     """
-
+    pass
 
 
     # 
-def check_convergence()
+def check_convergence():
     """
     Check for some or other defined convergence test.
 
     Returns
         True/False
-    """    
+    """
+    pass
+
+main()
