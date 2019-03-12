@@ -13,3 +13,12 @@ def create_random_surface(n=100):
     avg = [str(x) for x in avg]
     with open('./random_surface.csv', 'w') as f:
         f.write(','.join(avg))
+
+
+def read_floor(floor_file):
+    with open(floor_file, 'r') as f:
+        floor = f.read()
+    floor = floor.split(',')
+    floor = [float(x) for x in floor]
+    
+    return floor
