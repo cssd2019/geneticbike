@@ -25,10 +25,12 @@ def main():
 
 
     #create_child(Bike1.locations, Bike2.locations)
-    create_child(Bike1, Bike2)
+    Baby = create_child(Bike1, Bike2)
+    print(Baby.locations)
     #print(baby_newgen_loc)
 
-
+    #print(Bike1.locations)
+    #print(Bike2.locations)
     #create_child()
     # # do default child as back-up setting in case GA algorithm doesn't work
     # default_child()
@@ -129,11 +131,11 @@ def create_child(parent1, parent2_loc):
     parent1_loc = Bike1.locations
     parent2_loc = Bike2.locations
 
-    baby_locx = ( parent1_loc + parent2_loc ) * 0.5
-    baby_locy = ( parent1_loc + parent2_loc ) * 0.5
+    baby_loc = ( parent1_loc + parent2_loc ) * 0.5
     # return numpy array of x and y average value of newgen baby
+    Baby_Bike = Bike(np.array(baby_loc))
 
-    return np.array([baby_locx, baby_locy])
+    return Baby_Bike
 
 
 
