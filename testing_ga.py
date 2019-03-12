@@ -30,6 +30,7 @@ def main():
     default_baby = default_child()
     Baby_mutated = add_mutation(Baby)
 
+
     #print(Bike1.locations)
     #print(Bike2.locations)
     #create_child()
@@ -171,14 +172,11 @@ def add_mutation(Bike_input):
     """
     # mutate the location of both wheels with 0-20 % random increase or decrease
     rand_mutate     = random.uniform( -0.2, 0.2 )
-    original_loc    = Bike_input.locations
-    mutated_wheel_x = ( 1 - rand_mutate ) * original_loc[0][:2]
-    mutated_wheel_y = ( 1 - rand_mutate ) * original_loc[1][:2]
-
-    print(Bike_input.aw)
-
-    #Baby_mutated = Baby_Bike = Bike(np.array([]))
-    pass
+    bike_loc = Bike_input.locations
+    bike_loc[0][:2] = (1 + rand_mutate) * bike_loc[0][:2]
+    bike_loc[1][:2] = ( 1 + rand_mutate ) * bike_loc[1][:2]
+    Baby_mutated = Bike(bike_loc)
+    return  Baby_mutated
 
 
     # 
