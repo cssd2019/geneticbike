@@ -15,7 +15,7 @@ class Bike(object):
 							Single coordinates on a scale from 0 to 1.
 							If set to string "random" will randomize bike coordinates.
 		"""
-		if type(locations) == np.ndarray:
+		if isinstance(locations, np.ndarray):
 			if locations.shape == (2, 4):
 				self.locations = locations
 			else:
@@ -33,4 +33,10 @@ class Bike(object):
 		self.distance_made = None # easier to find errors if initialized to None
 		
 	def __str__(self):
-		return "Ring, ring, I'm a bike. :D"
+		return_str = "Ring, ring, I'm a bike. :D\nactiveWheel: {}\npassiveWheel: {}\nhandlebar1: {}\nhandlebar2: {}"
+		aw = (self.locations[self.x, self.activeWheel], self.locations[self.y, self.activeWheel])
+		pw = (self.locations[self.x, self.passiveWheel], self.locations[self.y, self.passiveWheel])
+		hb1 = (self.locations[self.x, self.handlebar1], self.locations[self.y, self.handlebar1])
+		hb2 = (self.locations[self.x, self.handlebar2], self.locations[self.y, self.handlebar2])
+		return_str = return_str.format(aw, pw, hb1, hb2)
+		return return_str
