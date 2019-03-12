@@ -1,0 +1,35 @@
+https://folk.uib.no/dgr061/cssd2019/bikegenes/geneticalgos.html
+
+A genetic algorithm (GA) is a form of evolutionary computation that is especially suitable 
+for optimization problems. 
+Following the process of natural evolution, a problem is usually 
+solved by following these main steps:
+
+    Initialize a random starting population. 
+    Each member of the population represents randomly chosen inputs, 
+    and is seen as one attempt at the solution. 
+    This set of parameters is referred to as the genes of the individual.
+    
+    Repeat the following until a defined end-condition is reached:
+        Evaluate the fitness of each population member. 
+        The fitness function should be chosen such that individuals closer to the 
+        solution have higher fitness.
+        Select the fittest individuals for reproduction. 
+        Many different algorithms are available here, weighted random selection (weighted by fitness) 
+        is one common choice.
+        From these selected parents, create a new generation of children through crossover and mutation, 
+        picking two parents at a time to produce one child until the desired population size is reached:
+            Crossover takes the genes of two parents and combines them to make up the child’s genes. 
+            For genes represented as strings, this could be through string splicing at a random index. 
+            For floating point genes, some form of modified averaging can be used.
+            Mutation can then modify a genetic parameter of the child completely randomly, 
+            but only with a small probability of happening at all. Without mutation, 
+            the GA would quickly get stuck on a local optimum, and not explore the wider search region.
+        Now replace the parent generation with the children and start over with the evaluation.
+
+Genetic algorithms work surprisingly well with relatively few function evaluations. 
+This is especially true for problems with complicated boundary conditions, 
+where more traditional hillclimbing algorithms can get “stuck in the fence”. 
+
+In a GA, a failed boundary condition sets the fitness of the failing individual to 0, 
+and the rest keeps going.
