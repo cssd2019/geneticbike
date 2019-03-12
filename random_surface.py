@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 
 import numpy as np
-from bike import *
-import matplotlib.pyplot as pp
 from random import random
 
-
-
-n = 100
 
 def create_random_surface(n=100):
     vals = [random() * (22/7) for _ in range(2*n)]
