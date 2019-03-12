@@ -9,10 +9,6 @@ def create_random_surface(n=100):
     avg = [np.sin(x) for x in vals]
     avg = np.convolve(avg, np.ones((n,))/n, mode='valid')
     
-    
-    pp.ylim(0,2)
-    pp.plot(avg)
-    
     avg = list(avg)
     avg = [str(x) for x in avg]
     with open('./random_surface.csv', 'w') as f:
