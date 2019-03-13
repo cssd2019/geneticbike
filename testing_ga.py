@@ -21,6 +21,7 @@ Bike2 = Bike("random")
 Bike3 = Bike("random")
 Bike2 = Bike("random")
 
+if __name__ == '__main__':
 def main()
     current_generation = create_genes()
     sorted_generation = test_fitness(current_generation)

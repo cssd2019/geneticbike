@@ -11,9 +11,53 @@ import string
 from bike import Bike
 
 
-def main():
+def main(bike_input_list, max_all, ga_iter, print_output)
     """
-        Outer loop to test GA
+    MAIN CONNECTION
+    Inputs:
+        bike_input_list (list of bike objects with each having
+            Bike.displacement_made >= 0, 
+            ie. not "None".)
+        max_all: keep track of max x reached over all iterations
+        ga_iter: kep track of # of GA iterations
+        print_output: True / False
+
+        !TODO: DEFINE INPUTS IN SEPARATE TOP-LEVEL FN.
+
+    Outputs:
+        list of new generation bike objects.
+        For each, bike.displacement = "None".
+
+        iteration counter
+        total max distance reached
+    """
+    conv = FALSE
+    max_all, current_max_distance, ga_counter, conv, bike_output_list = _full_GA(max_all, ga_iter, conv, bike_input_list)
+    
+    if print_output:
+        print("Iteration number --  ", ga_counter)
+        print("Maximum distance made on last iteration --  ", current_max_distance)
+        print("Maximum distance ...ever...  --  ", max_distance)
+        print("--\n")
+
+    return (bike_output_list, max_all, ga_iter)
+
+
+def _test_local_main():
+    """
+        Outer loop to test GA:
+            This must be modified to link with SIMULATION module.
+
+        --- For module linkage --- 
+
+            Input
+                list of bike objects
+                    where each bike object has Bike.distance_made >= 0
+                    !TODO: don't assume this, include in test and set default distance_made == 0
+
+            Returns
+                list of next-generation bike objects
+                    *Note: Bike.distance_made == "None" for these.
     """
     # This is declared in the first iteration of GenAlg
     #   ... updates with new max_x reached in each iteration of GenAlg
@@ -26,21 +70,20 @@ def main():
 
     #initialise bike rack if not passed from SIM module
     # Default case for testing with input == number of bike objects to generate
-    parents = generate_bike_rack(20)
-    print("First bike rack of parents made")
-    print("")
-
+    parents = _generate_bike_rack(20)
+    print("First bike rack of parents made\n")
 
     while conv == False:
-        max_distance, last_max_distance, ga_counter, conv, parents = full_GA(max_distance, last_max_distance, ga_counter, conv, parents)
+        max_distance, last_max_distance, ga_counter, conv, parents = _full_GA(max_distance, ga_counter, conv, parents)
+        
+        # pdb.set_<trace()
         print("New generation produced!")
         print("Convergence --  ", conv)
         # print(conv)
         print("Iteration number --  ", ga_counter)
         print("Maximum distance made on last iteration --  ", last_max_distance)
         print("Maximum distance ...ever...  --  ", max_distance)
-        print("--")
-        print("")
+        print("--\n")
         if conv == False:
             update_children_x(parents)
     
@@ -49,7 +92,7 @@ def main():
 
 
 
-def full_GA(max_distance, last_max_distance, ga_counter, conv, parents):
+def _full_GA(max_distance, ga_counter, conv, parents):
     # # Default case for testing with input == number of bike objects to generate
     # parents = generate_bike_rack(20)
         
@@ -57,26 +100,26 @@ def full_GA(max_distance, last_max_distance, ga_counter, conv, parents):
     # [x.distance_made  for x in parents]
 
     # (3) sort dictionary list by fitness
-    parents = test_fitness(parents)
+    parents = _test_fitness(parents)
         
     # [x.distance_made  for x in parents]
 
     # (4) update max distances
-    max_distance, last_max_distance = update_max_x(max_distance, last_max_distance, parents)
+    max_distance, last_max_distance = _update_max_x(max_distance, parents)
 
     # (5) select parents for new generaion (LABELS ONLY)
-    fittest_parents = select_parents(parents)
+    fittest_parents = _select_parents(parents)
 
     # (6) pair two randon parents (LABELS ONLY)
     # couple_labels = choose_parents(parent_labels)
-    couples = [choose_parents(fittest_parents) for x in list(range(len(parents)))]
+    couples = [_choose_parents(fittest_parents) for x in list(range(len(parents)))]
         
     # [x.distance_made  for x in couples[1]]
     # [x.distance_made  for x in couples[15]]
     # [x.distance_made  for x in couples[18]]
 
     # (7) create new child for every random couple
-    children = [create_child(couples[x]) for x in list(range(len(parents)))]        
+    children = [_create_child(couples[x]) for x in list(range(len(parents)))]        
     # [x.distance_made  for x in children] # should be "none"
     # [x.locations  for x in children]
         
@@ -85,43 +128,54 @@ def full_GA(max_distance, last_max_distance, ga_counter, conv, parents):
     # default_child()
 
     # (8) Introduce mutations
-    children = [add_mutation(x) for x in children]
+    children = [_add_mutation(x) for x in children]
     # [x.locations  for x in children]
     
     # (9) Convergence checks
-    if ga_counter == 20:
+    conv = _check_convergence(max_distance, last_max_distance, ga_counter)
+    
+    # (10) BACK-UP CONVERGENCE! Max iterations
+    if ga_counter == 1000:
         conv = True
     else:
         ga_counter = ga_counter + 1
-    # check_convergence()
-    # check_counter()
     return (max_distance, last_max_distance, ga_counter, conv, children)
 
 
 
-def generate_bike_rack(N):
+def _generate_bike_rack(N):
+    """
+        Only called if SIM module is not connected.
+
+        Generate a random bike rack with 
+        a set of N bike objects and randomly assigned values for
+        Bike.distance_made
+    """
     # Test bikes:
     bike_rack = [Bike("random") for x in range(N)]
     for i in range(len(bike_rack)):
-        bike_rack[i].distance_made =  random.uniform(0, 100)
+        bike_rack[i].distance_made =  random.uniform(0, 25)
     return bike_rack
 
-def update_children_x(obj_list):
+def _update_children_x(obj_list):
     """
-        Only used if SIM module is not used.
+        Only called if SIM module is not connected.
+
+        Update next generation with randomly assigned values for
+        Bike.distance_made
     """
     # Test bikes:
     for i in range(len(obj_list)):
-        obj_list[i].distance_made =  random.uniform(0, 100)
+        obj_list[i].distance_made =  random.uniform(15, 80)
     return obj_list    
 
 
-def test_fitness(obj_list):
+def _test_fitness(obj_list):
     """
     Rank fitness according to max x-distance reached by each bicycle-like object.
         
     Input:
-        Gene list of objects
+        List of objects
 
     Return:
         Sorted list of objects
@@ -136,15 +190,16 @@ def test_fitness(obj_list):
     return sorted(obj_list, key = lambda x: x.distance_made, reverse=True)
 
 
-def update_max_x(max_tot, max_current, obj_list):
+def _update_max_x(max_tot, obj_list):
     """
     Input 
-        Maximum x reached (ever), current max x reached, list of objects
+        Maximum x reached (ever), list of objects
     Returns
         Maximum x reached (ever), current max x reached 
     """
     # max_current = max([x.distance_made  for x in obj_list])[0]
     max_current = max([x.distance_made  for x in obj_list])
+    # pdb.set_trace()
     # max_current = 
     # pdb.set_trace()
     if max_current > max_tot:
@@ -152,33 +207,34 @@ def update_max_x(max_tot, max_current, obj_list):
     return (max_tot, max_current)
 
 
-def select_parents(obj_list):
+def _select_parents(obj_list):
     """
     Select [how?] set of parents to keep for next generation.
 
     Input:
-        Gene dictionary
+        Object list
 
     Return:
-        Subset gene dictionary
+        Subset object list
     """
     n = 4   #Choose *n* fittest genes
     return obj_list[:n]
 
 
-def choose_parents(obj_list):
+def _choose_parents(obj_list):
     """
-    Combinations of selected parents.
+    Random combinations of selected parent objects.
+
     Input:
-        Subset gene dictionary
+        Subset of fittest object list.
 
     Return:
-        Permutation list? Necessary?
+        Two objects as tuple
     """
     return random.sample(set(obj_list), 2)
 
 
-def default_child():
+def _default_child():
     """
     Define random default output so that 
     entire toolchain "works" to some degree
@@ -192,9 +248,9 @@ def default_child():
 
 
         # 
-def create_child(parent_couple):
+def _create_child(parent_couple):
     """
-    How to combine [average?] between two parents.
+    How to combine [currently: average] between two parents.
     Inputs:
         Two bicycle objects
     Returns:
@@ -215,7 +271,7 @@ def create_child(parent_couple):
         # After the breeding, each individual must have a small probability 
         # to see their DNA change a little bit. 
         # The goal of this operation is to prevent the algorithm to be blocked in a local minimum.
-def add_mutation(Bike_input):
+def _add_mutation(Bike_input):
     """
     Add natural mutation.
     Input:
@@ -233,14 +289,26 @@ def add_mutation(Bike_input):
 
 
 
-        # 
-# def check_convergence()
-#     """
-#     Check for some or other defined convergence test.
+def _check_convergence(max_tot, max_current, iteration):
+    """
+    Check for some or other defined convergence test.
+    At the moment:
+        convergence if
+            current max_x - total max x <= delta_x (as defined here)
+    Returns
+        True if convergence criterium reached
+        False if convergence not reached
+    """
+    local_conv = False
+    # check if after subsequent iterations the values does not change more then Delta_X value
+    delta_x = 0.001
+    # global mean_x_GAiter
+    
+    if iteration > 1:
+        if ( max_current - max_tot ) <= delta_x:
+            local_conv = True
+    return local_conv
 
-#     Returns
-#         True/False
-#     """    
 
 if __name__== "__main__":  
     main()
