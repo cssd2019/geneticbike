@@ -1,0 +1,63 @@
+
+Problem outline and layout:
+    !TODO insert layout photos
+
+    Identifiy modules
+
+    Agree on bicycle object definition
+
+    
+        Roland: look into rather setting up virtual enviroments for version control
+            - everyone has different versions of python
+            - clash of package versions, eg f strings
+            - 2 linux, two mac
+        https://packaging.python.org/guides/installing-using-pip-and-virtualenv/
+            Everyone uses this
+        DROP THIS FOR NOW.
+        End users will also have different versions
+
+Test own branches
+
+.gitignore:
+    .ipynb
+    testing_
+    (from Roland)
+
+
+# GROUP CHECK: all have updated .gitignore. DONE
+
+Group session: intialise bike object.
+    - coordinates in space
+    - discuss array structure
+    - rows: x, y
+    - columns: bike components
+    - initialise bike array as python object (import bike!)
+     from bike import *
+    DONE
+
+Tasks:
+    settled on two groups of two for SIM and GA.
+        - viz: can re-use animation code from earlier in the week
+        - if we don't manage: plot static output as MINIMAL OUTPUT
+    drew lots for SIM, GA
+        SIM: Roland, Turkuler
+        GA: Pat, Elsa
+
+Will work on tasks in two groups tomorrow.
+Discuss again halfway through working time tomorrow for updates, etc.
+
+//end day one
+
+
+//two
+go through bike obj pull request
+merged & confirmed DONE.
+delete local branches
+PLAN: work in pairs defined yesterday.
+
+Meet again at coffee - any changes to bike object needed?
+
+    //GA
+
+**Have whole toolchain ready with minimal functionality, even if broken
+
