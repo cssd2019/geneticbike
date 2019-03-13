@@ -6,6 +6,7 @@ import numpy as np
 import operator # to sort list in dictionary
 from bike import Bike
 import random
+import matplotlib.pyplot as plt
 
 # This is declared in the first iteration of GenAlg
 #   ... updates with new max_x reached in each iteration of GenAlg
@@ -15,7 +16,7 @@ global_max_x = 0
 ga_counter = 0
 
 # List of average x reach in each iteration of generation
-mean_x_GAiter = [0]
+mean_x_GAiter = 0
 
 Bike1 = Bike("random")
 Bike2 = Bike("random")
@@ -28,16 +29,23 @@ def main():
     #parents = select_parents(sorted_gene)
     # permute_parents()
 
-    mean_x_GAiter.append(cal_mean_distX())
+    #mean_x_GAiter.append(cal_mean_distX())
+
     check_con = False
+    global mean_x_GAiter
+    mean_x_GAiter = cal_mean_distX()
+
     while( not check_con):
 
         print("continue")
         Baby = create_child(Bike1, Bike2)
         default_baby = default_child()
         Baby_mutated = add_mutation(Baby)
-        mean_x_GAiter.append(cal_mean_distX())
-        check_con = check_convergence(mean_x_GAiter)
+
+        new_mean_x_GAiter = cal_mean_distX()
+        check_con = check_convergence(new_mean_x_GAiter)
+        print(check_con)
+
     else:
         pass
 
@@ -207,7 +215,7 @@ def cal_mean_distX():
     return mean_distX
 
 
-def check_convergence(mean_x_GAiter):
+def check_convergence(new_mean_x_GAiter):
     """
     Check for some or other defined convergence test.
 
@@ -216,13 +224,28 @@ def check_convergence(mean_x_GAiter):
     """
     # check if after subsequent iterations the values does not change more then Delta_X value
     delta_x = 0.001
+    global mean_x_GAiter
+    if ( new_mean_x_GAiter - mean_x_GAiter ) <= delta_x:
 
-    if ( mean_x_GAiter[-1] - mean_x_GAiter[-2] ) < delta_x:
-        print( mean_x_GAiter )
         return True
     else:
+
+        mean_x_GAiter = new_mean_x_GAiter
         return False
 
+def plot_mean_distance_develop(mean_x_GAiter):
+    """
+    Plot line graph of mean distance for continue next generation
+    :param mean_x_GAiter:
+    :return:
+    """
+    generation = np.arange(len(mean_x_GAiter), dtype = int)
+    plt.plot(generation, mean_x_GAiter, 'o-')
+    plt.xticks(np.arange(0, len(mean_x_GAiter), step=1))
+    plt.title('Average distance of Bike generations')
+    plt.ylabel('Distance')
+    plt.xlabel('Generation')
+    plt.show()
 
 
 main()
