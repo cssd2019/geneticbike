@@ -11,7 +11,7 @@ import string
 from bike import Bike
 
 
-def main(bike_input_list, max_all, ga_iter, print_output)
+def call_ga(bike_input_list, max_all, ga_iter, print_output)
     """
     MAIN CONNECTION
     Inputs:
@@ -325,5 +325,5 @@ def _check_convergence(max_tot, max_current, iteration):
     return local_conv
 
 
-if __name__== "__main__":  
-    main()
+# if __name__== "__main__":  
+#     main()
