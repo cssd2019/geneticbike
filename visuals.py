@@ -11,20 +11,17 @@ def draw(floor, loc_bike):
 	SIZE_WHEEL = .2
 	SIZE_HANDLE = .1
 	
-	fig, ax = pp.subplots()
+	pp.ion()
+	fig = pp.figure()
+	ax = fig.add_subplot(111)
 	
 	ax.set_xlim(0, LENGTH_STAGE)
 	ax.set_ylim(0, HEIGHT_STAGE)
 	
-	fig = draw_floor(floor)
-	fig = draw_bike(loc_bike)
+	fig_floor = draw_floor(floor)
+	fig_bike = draw_bike(loc_bike)
 	
-	
-	# ani.save('basic_animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
-	# or
-	pp.show()
-	#sleep(2)
-	fig.clear()
+	pp.draw()
 
 
 def draw_floor(floor):
@@ -40,8 +37,11 @@ def draw_bike(loc_bike):
 	return fig
 
 
+def animate(floor, locs_bike):
+	for loc in locs_bike:
+		draw(floor, loc)
+		pp.pause(.5)
+	
 floor = read_np_random_surface('./random_surface.csv')
-bike_loc = Bike('random').locations
-draw(floor, bike_loc)
-bike_loc[0,:] += 5
-draw(floor, bike_loc)
+bike_locs = [Bike('random').locations for i in range(10)]
+animate(floor, bike_locs)
