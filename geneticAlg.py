@@ -30,17 +30,32 @@ def main(bike_input_list, max_all, ga_iter, print_output)
 
         iteration counter
         total max distance reached
+        conv
+        !TODO: stop if True outside of this script.
     """
     conv = FALSE
-    max_all, current_max_distance, ga_counter, conv, bike_output_list = _full_GA(max_all, ga_iter, conv, bike_input_list)
+    max_all, current_max_distance, ga_iter, conv, bike_output_list = _full_GA(max_all, ga_iter, conv, bike_input_list)
     
+    # Convergence checks
+    conv = _check_convergence(max_all, current_max_distance, ga_iter)
+    
+    # BACK-UP CONVERGENCE! Max iterations
+    # Add to iteration counter
+    if ga_iter == 1000:
+        conv = True
+        print("Convergence reached: max. number of allowed iterations -.  ", ga_iter)
+    else:
+        ga_iter = ga_iter + 1
+
+
     if print_output:
+        print("Convergence --  ", conv)
         print("Iteration number --  ", ga_counter)
         print("Maximum distance made on last iteration --  ", current_max_distance)
         print("Maximum distance ...ever...  --  ", max_distance)
         print("--\n")
 
-    return (bike_output_list, max_all, ga_iter)
+    return (bike_output_list, max_all, ga_iter, conv)
 
 
 def _test_local_main():
