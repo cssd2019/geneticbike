@@ -1,8 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as pp
 from random_surface import read_np_random_surface
 from bike import Bike
-from time import sleep
 
 
 def draw(floor, loc_bike):
@@ -41,7 +39,9 @@ def animate(floor, locs_bike):
 	for loc in locs_bike:
 		draw(floor, loc)
 		pp.pause(.5)
-	
-floor = read_np_random_surface('./random_surface.csv')
-bike_locs = [Bike('random').locations for i in range(10)]
-animate(floor, bike_locs)
+
+
+def testrun():
+	floor = read_np_random_surface('./random_surface.csv')
+	bike_locs = [Bike('random').locations for i in range(10)]
+	animate(floor, bike_locs)
