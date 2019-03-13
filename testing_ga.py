@@ -42,8 +42,8 @@ def main():
         default_baby = default_child()
         Baby_mutated = add_mutation(Baby)
 
-        new_mean_x_GAiter = cal_mean_distX()
-        check_con = check_convergence(new_mean_x_GAiter)
+        new_mean_x_GAiter = cal_mean_distX() # *** new_max_x  = sorted_generation[0][1] ***
+        check_con = check_convergence(new_mean_x_GAiter) # change input to be new_max_x
         print(check_con)
 
     else:
@@ -226,6 +226,7 @@ def check_convergence(new_mean_x_GAiter):
     delta_x = 0.001
     global mean_x_GAiter
     if ( new_mean_x_GAiter - mean_x_GAiter ) <= delta_x:
+        # *** use mean_x_GAiter to be global_max_x ***
 
         return True
     else:
