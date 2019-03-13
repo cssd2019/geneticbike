@@ -14,8 +14,12 @@ global_max_x = 0
 # Extra counter to check number of GA iterations
 ga_counter = 0
 
+# List of average x reach in each iteration of generation
+mean_x_GAiter = [0]
+
 Bike1 = Bike("random")
 Bike2 = Bike("random")
+
 
 def main():
     #gene_input = create_genes()
@@ -24,16 +28,22 @@ def main():
     #parents = select_parents(sorted_gene)
     # permute_parents()
 
+    mean_x_GAiter.append(cal_mean_distX())
+    check_con = False
+    while( not check_con):
 
-    #create_child(Bike1.locations, Bike2.locations)
-    Baby = create_child(Bike1, Bike2)
-    default_baby = default_child()
-    Baby_mutated = add_mutation(Baby)
+        print("continue")
+        Baby = create_child(Bike1, Bike2)
+        default_baby = default_child()
+        Baby_mutated = add_mutation(Baby)
+        mean_x_GAiter.append(cal_mean_distX())
+        check_con = check_convergence(mean_x_GAiter)
+    else:
+        pass
 
 
-    #print(Bike1.locations)
-    #print(Bike2.locations)
-    #create_child()
+
+
     # # do default child as back-up setting in case GA algorithm doesn't work
     # default_child()
     # add_mutation()
@@ -179,14 +189,40 @@ def add_mutation(Bike_input):
     return  Baby_mutated
 
 
-    # 
-def check_convergence():
+    #
+
+def cal_mean_distX():
+    """
+    Calculate the average of distance X for each generation
+    and put the value
+    input is the list of distances for each generation
+    :return:
+        average value of distance X
+
+    """
+
+    # create random value of distX for test the code
+    distX_rand_list = [random.randrange(1, 101, 1) for _ in range(10)]
+    mean_distX = np.average(distX_rand_list)
+    return mean_distX
+
+
+def check_convergence(mean_x_GAiter):
     """
     Check for some or other defined convergence test.
 
     Returns
         True/False
     """
-    pass
+    # check if after subsequent iterations the values does not change more then Delta_X value
+    delta_x = 0.001
+
+    if ( mean_x_GAiter[-1] - mean_x_GAiter[-2] ) < delta_x:
+        print( mean_x_GAiter )
+        return True
+    else:
+        return False
+
+
 
 main()
