@@ -93,19 +93,29 @@ while inair_firstPoint == True or inair_secondPoint == True:
 # the initial length of springs are set here
 linit = length_calculation(mB)
 
+l = linit
 
 v[0,:] = a_Aw * dt
 
 # movement starts
-F = np.zeros((2,1))
+F = np.zeros((2,2))
 while moving == True:
-    v[0,:] += a_Aw * dt
+    dx = np.zeros((2,2))
+    dx[0,:] = np.subtract(mB.locations[0,:], mB.locations[0,0])
+    dx[1,:] = np.subtract(mB.locations[0,:], mB.locations[0,1])
+    tmp = np.multiply((1 - np.divide(l,linit)),dx)
+    na_index = np.isnan(tmp)
+    tmp[na_index] = 0                       
+    F[0,:] = np.sum(-k * tmp , axis = 1)
+    a = F / m[0:2]
+    v[0,:] = v[0,:] + a[0,:] * dt
     mB.locations = mB.locations + v * dt
     locations.append(mB.locations)
     t += 1
     l = length_calculation(mB)
     if t == 50:
         moving = False
+
 
 
 
