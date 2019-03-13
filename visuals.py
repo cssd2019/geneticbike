@@ -3,17 +3,13 @@ from random_surface import read_np_random_surface
 from bike import Bike
 
 
-def _draw(floor, loc_bike):
+def _draw_init():
 	"""
-	Draws current position of the bike along with the floor.
-	:param floor: Numpy array of floor (0-th column is x-axis)
-	:param loc_bike: Numpy array containing current location of bike
+	Initializes drawing environment.
 	:return: No return value
 	"""
 	LENGTH_STAGE = 100
 	HEIGHT_STAGE = 10
-	SIZE_WHEEL = .2
-	SIZE_HANDLE = .1
 	
 	pp.ion()
 	fig = pp.figure()
@@ -21,11 +17,6 @@ def _draw(floor, loc_bike):
 	
 	ax.set_xlim(0, LENGTH_STAGE)
 	ax.set_ylim(0, HEIGHT_STAGE)
-	
-	fig_floor = _draw_floor(floor)
-	fig_bike = _draw_bike(loc_bike)
-	
-	pp.draw()
 
 
 def _draw_floor(floor):
@@ -44,6 +35,8 @@ def _draw_bike(loc_bike):
 	:param loc_bike: Bike as in draw function.
 	:return: Figure object
 	"""
+	#SIZE_WHEEL = .2
+	#SIZE_HANDLE = .1
 	fig = pp.plot(loc_bike[0, :2], loc_bike[1, :2], 'bo', loc_bike[0, 2:], loc_bike[1, 2:], 'r^', markersize=5)
 	for i in range(4):
 		for j in range(i, 4):
@@ -58,12 +51,14 @@ def animate(floor, locs_bike):
 	:param locs_bike: List of Numpy arrays containing current location of bike.
 	:return: Nothing
 	"""
+	_draw_init()
+	_draw_floor(floor)
 	for loc in locs_bike:
-		_draw(floor, loc)
-		pp.pause(.5)
+		_draw_bike(loc)
+		pp.pause(.01)
 
 
 def testrun():
 	floor = read_np_random_surface('./random_surface.csv')
-	bike_locs = [Bike('random').locations for i in range(10)]
+	bike_locs = [Bike('random').locations for i in range(100)]
 	animate(floor, bike_locs)
