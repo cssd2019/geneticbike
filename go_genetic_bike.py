@@ -4,6 +4,7 @@ from bike import Bike
 import geneticAlg
 import random
 import numpy as np
+import pdb
 
 
 def main():
@@ -34,10 +35,10 @@ def main():
         bike_list = _update_bike_distance(bike_list, iteration)
         
         # *GENETIC ALGORITHM
-        bike_list, max_distance_ever, iteration, conv = geneticAlg.call_ga(bike_list, max_distance_ever, iteration, print_output)
+        bike_list, max_distance_ever, conv = geneticAlg.call_ga(bike_list, max_distance_ever, iteration, print_output)
 
         # Optional output:
-        if print_output:
+        if print_output == True:
             print("Convergence --  ", conv)
             print("Iteration number --  ", iteration)
             # print("Maximum distance made on last iteration --  ", current_max_distance)
@@ -50,7 +51,6 @@ def main():
             print("Convergence reached: max. number of allowed iterations -.  ", iteration)
         else:
             iteration = iteration + 1
-
         
 
 
