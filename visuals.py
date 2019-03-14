@@ -51,14 +51,16 @@ def animate(floor, locs_bike):
 	:param locs_bike: List of Numpy arrays containing current location of bike.
 	:return: Nothing
 	"""
-	_draw_init()
-	_draw_floor(floor)
 	for loc in locs_bike:
-		_draw_bike(loc)
-		pp.pause(.01)
-
+		_draw_init()
+		_draw_floor(floor)
+		fig = _draw_bike(loc)
+		pp.pause(.1)
+		pp.clf()
 
 def testrun():
 	floor = read_np_random_surface('./random_surface.csv')
-	bike_locs = [Bike('random').locations for i in range(100)]
+	bike_locs = [Bike('random').locations for i in range(20)]
 	animate(floor, bike_locs)
+
+#testrun()
