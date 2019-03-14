@@ -24,8 +24,6 @@ def call_ga(bike_input_list, max_all, ga_iter, print_output):
     Outputs:
         list of new generation bike objects.
         For each, bike.displacement = "None".
-
-        iteration counter
         total max distance reached
         conv
     """
@@ -35,7 +33,7 @@ def call_ga(bike_input_list, max_all, ga_iter, print_output):
     # Convergence checks
     conv = _check_convergence(max_all, current_max_distance, ga_iter)
 
-    return (bike_output_list, max_all, ga_iter, conv)
+    return (bike_output_list, max_all, conv)
 
 
 def _test_local_main():
