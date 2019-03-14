@@ -18,7 +18,7 @@ At this point, the bike has fallen over and is broken.
 A genetic algorithm is used to evolve 20 such random bicycles, with the evolution step concentrated on the greatest x-distance reached by a generation of bicylces.
 
 
-## Implementation: submodules
+## Implementation: go_genetic_bike.py
 
 **Bike** is the central object that gets passed around in the workflow and is the carrier of the exchanged information. It contains the locations of the points in the bike and a variable for distance traveled. Bike('random') initializes a completely random bike.  
 
